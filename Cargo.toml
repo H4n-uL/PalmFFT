@@ -1,0 +1,9 @@
+[package]
+name = "palmfft"
+version = "1.0.0"
+edition = "2021"
+description = "Palm-sized Faster Fourier Transform"
+repository = "https://github.com/H4n-uL/PalmFFT"
+license = "Unlicense"
+
+[dependencies]
