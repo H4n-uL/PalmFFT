@@ -81,20 +81,17 @@ fn calc_first_half(n: usize, res: &mut [Complex]) {
     }
 
     while i4 - in_val <= 0 && i < ndone {
-        let xm = (in_val - i4) as usize + half;
-        res[i] = Complex::new(res[xm].i, res[xm].r);
+        res[i] = res[(in_val - i4) as usize + half].rotm90().conj();
         i += 1; i4 += 4;
     }
 
     while i4 <= 3 * in_val - i4 && i < ndone {
-        let xm = (i4 - in_val) as usize + half;
-        res[i] = Complex::new(-res[xm].i, res[xm].r);
+        res[i] = res[(i4 - in_val) as usize + half].rot90();
         i += 1; i4 += 4;
     }
 
     while i < ndone {
-        let xm = (2 * in_val - i4) as usize + half;
-        res[i] = Complex::new(-res[xm].r, res[xm].i);
+        res[i] = -res[(2 * in_val - i4) as usize + half].conj();
         i += 1; i4 += 4;
     }
 }

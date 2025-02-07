@@ -39,9 +39,8 @@ impl Bluestein {
         plan.bkf[0] = plan.bk[0] * xn2;
 
         for m in 1..n {
-            let normalized = plan.bk[m] * xn2;
-            plan.bkf[m] = normalized;
-            plan.bkf[n2 - m] = normalized;
+            let norm = plan.bk[m] * xn2;
+            (plan.bkf[m], plan.bkf[n2 - m]) = (norm, norm);
         }
 
         for m in n..=(n2 - n) { plan.bkf[m] = Complex::new(0.0, 0.0); }
