@@ -23,7 +23,7 @@ impl CfftPlan {
         if bs_cost < ct_cost { plan.bs = Some(Bluestein::new(length)); }
         else { plan.ct = Some(CooleyTukey::new(length)); }
 
-        return  plan;
+        return plan;
     }
 
     pub fn forward(&self, data: &mut [Complex], fct: f64) {
