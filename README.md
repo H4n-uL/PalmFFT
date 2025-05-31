@@ -4,7 +4,7 @@ The Infinite Monkey Derivative of [PocketFFT](https://gitlab.mpcdf.mpg.de/mtr/po
 
 It's technically a dirty-room implementation, but my brain is clean. fuck.
 
-This repository is released as Public Domain as a reminder not to do the same shit I did.
+I wanted to release this repository as Public Domain but released as BSD 3-clause cuz am afraid of lawyers kek
 
 ## What it can do
 
