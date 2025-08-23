@@ -37,8 +37,8 @@ fn pass3(ido: usize, l1: usize, cc: &[Complex], ch: &mut [Complex], wa: &[Comple
 
             ch[0 + ido * (k + l1 * 0)] = t0 + t1;
 
-            let ca = Complex::new(t0.r + TW1R * t1.r, t0.i + TW1R * t1.i);
-            let cb = Complex::new(-tw1i * t2.i, tw1i * t2.r);
+            let ca = Complex::new(t0.re + TW1R * t1.re, t0.im + TW1R * t1.im);
+            let cb = Complex::new(-tw1i * t2.im, tw1i * t2.re);
             (ch[0 + ido * (k + l1 * 1)], ch[0 + ido * (k + l1 * 2)]) = pmc(ca, cb);
         }
     }
@@ -49,8 +49,8 @@ fn pass3(ido: usize, l1: usize, cc: &[Complex], ch: &mut [Complex], wa: &[Comple
 
             ch[0 + ido * (k + l1 * 0)] = t0 + t1;
 
-            let ca = Complex::new(t0.r + TW1R * t1.r, t0.i + TW1R * t1.i);
-            let cb = Complex::new(-tw1i * t2.i, tw1i * t2.r);
+            let ca = Complex::new(t0.re + TW1R * t1.re, t0.im + TW1R * t1.im);
+            let cb = Complex::new(-tw1i * t2.im, tw1i * t2.re);
             (ch[0 + ido * (k + l1 * 1)], ch[0 + ido * (k + l1 * 2)]) = pmc(ca, cb);
 
             for i in 1..ido {
@@ -61,8 +61,8 @@ fn pass3(ido: usize, l1: usize, cc: &[Complex], ch: &mut [Complex], wa: &[Comple
 
                 ch[i + ido * (k + l1 * 0)] = t0 + t1;
 
-                let ca = Complex::new(t0.r + TW1R * t1.r, t0.i + TW1R * t1.i);
-                let cb = Complex::new(-tw1i * t2.i, tw1i * t2.r);
+                let ca = Complex::new(t0.re + TW1R * t1.re, t0.im + TW1R * t1.im);
+                let cb = Complex::new(-tw1i * t2.im, tw1i * t2.re);
                 let (da, db) = pmc(ca, cb);
 
                 if sign < 0 {
@@ -142,12 +142,24 @@ fn pass5(ido: usize, l1: usize, cc: &[Complex], ch: &mut [Complex], wa: &[Comple
 
             ch[0 + ido * (k + l1 * 0)] = t0 + t1 + t2;
 
-            let ca = Complex::new(t0.r + TW1R * t1.r + TW2R * t2.r, t0.i + TW1R * t1.i + TW2R * t2.i);
-            let cb = Complex::new(-(tw1i * t4.i + tw2i * t3.i), tw1i * t4.r + tw2i * t3.r);
+            let ca = Complex::new(
+                t0.re + TW1R * t1.re + TW2R * t2.re,
+                t0.im + TW1R * t1.im + TW2R * t2.im
+            );
+            let cb = Complex::new(
+                -(tw1i * t4.im + tw2i * t3.im),
+                tw1i * t4.re + tw2i * t3.re
+            );
             (ch[0 + ido * (k + l1 * 1)], ch[0 + ido * (k + l1 * 4)]) = pmc(ca, cb);
 
-            let ca = Complex::new(t0.r + TW2R * t1.r + TW1R * t2.r, t0.i + TW2R * t1.i + TW1R * t2.i);
-            let cb = Complex::new(-(tw2i * t4.i - tw1i * t3.i), tw2i * t4.r - tw1i * t3.r);
+            let ca = Complex::new(
+                t0.re + TW2R * t1.re + TW1R * t2.re,
+                t0.im + TW2R * t1.im + TW1R * t2.im
+            );
+            let cb = Complex::new(
+                -(tw2i * t4.im - tw1i * t3.im),
+                tw2i * t4.re - tw1i * t3.re
+            );
             (ch[0 + ido * (k + l1 * 2)], ch[0 + ido * (k + l1 * 3)]) = pmc(ca, cb);
         }
     }
@@ -159,12 +171,24 @@ fn pass5(ido: usize, l1: usize, cc: &[Complex], ch: &mut [Complex], wa: &[Comple
 
             ch[0 + ido * (k + l1 * 0)] = t0 + t1 + t2;
 
-            let ca = Complex::new(t0.r + TW1R * t1.r + TW2R * t2.r, t0.i + TW1R * t1.i + TW2R * t2.i);
-            let cb = Complex::new(-(tw1i * t4.i + tw2i * t3.i), tw1i * t4.r + tw2i * t3.r);
+            let ca = Complex::new(
+                t0.re + TW1R * t1.re + TW2R * t2.re,
+                t0.im + TW1R * t1.im + TW2R * t2.im
+            );
+            let cb = Complex::new(
+                -(tw1i * t4.im + tw2i * t3.im),
+                tw1i * t4.re + tw2i * t3.re
+            );
             (ch[0 + ido * (k + l1 * 1)], ch[0 + ido * (k + l1 * 4)]) = pmc(ca, cb);
 
-            let ca = Complex::new(t0.r + TW2R * t1.r + TW1R * t2.r, t0.i + TW2R * t1.i + TW1R * t2.i);
-            let cb = Complex::new(-(tw2i * t4.i - tw1i * t3.i), tw2i * t4.r - tw1i * t3.r);
+            let ca = Complex::new(
+                t0.re + TW2R * t1.re + TW1R * t2.re,
+                t0.im + TW2R * t1.im + TW1R * t2.im
+            );
+            let cb = Complex::new(
+                -(tw2i * t4.im - tw1i * t3.im),
+                tw2i * t4.re - tw1i * t3.re
+            );
             (ch[0 + ido * (k + l1 * 2)], ch[0 + ido * (k + l1 * 3)]) = pmc(ca, cb);
 
             for i in 1..ido {
@@ -174,14 +198,26 @@ fn pass5(ido: usize, l1: usize, cc: &[Complex], ch: &mut [Complex], wa: &[Comple
 
                 ch[i + ido * (k + l1 * 0)] = t0 + t1 + t2;
 
-                let ca = Complex::new(t0.r + TW1R * t1.r + TW2R * t2.r, t0.i + TW1R * t1.i + TW2R * t2.i);
-                let cb = Complex::new(-(tw1i * t4.i + tw2i * t3.i), tw1i * t4.r + tw2i * t3.r);
+                let ca = Complex::new(
+                    t0.re + TW1R * t1.re + TW2R * t2.re,
+                    t0.im + TW1R * t1.im + TW2R * t2.im
+                );
+                let cb = Complex::new(
+                    -(tw1i * t4.im + tw2i * t3.im),
+                    tw1i * t4.re + tw2i * t3.re
+                );
                 let (da, db) = pmc(ca, cb);
                 ch[i + ido * (k + l1 * 1)] = if sign < 0 { wa[i - 1 + 0 * (ido - 1)].conj() * da } else { wa[i - 1 + 0 * (ido - 1)] * da };
                 ch[i + ido * (k + l1 * 4)] = if sign < 0 { wa[i - 1 + 3 * (ido - 1)].conj() * db } else { wa[i - 1 + 3 * (ido - 1)] * db };
 
-                let ca = Complex::new(t0.r + TW2R * t1.r + TW1R * t2.r, t0.i + TW2R * t1.i + TW1R * t2.i);
-                let cb = Complex::new(-(tw2i * t4.i - tw1i * t3.i), tw2i * t4.r - tw1i * t3.r);
+                let ca = Complex::new(
+                    t0.re + TW2R * t1.re + TW1R * t2.re,
+                    t0.im + TW2R * t1.im + TW1R * t2.im
+                );
+                let cb = Complex::new(
+                    -(tw2i * t4.im - tw1i * t3.im),
+                    tw2i * t4.re - tw1i * t3.re
+                );
                 let (da, db) = pmc(ca, cb);
                 ch[i + ido * (k + l1 * 2)] = if sign < 0 { wa[i - 1 + 1 * (ido - 1)].conj() * da } else { wa[i - 1 + 1 * (ido - 1)] * da };
                 ch[i + ido * (k + l1 * 3)] = if sign < 0 { wa[i - 1 + 2 * (ido - 1)].conj() * db } else { wa[i - 1 + 2 * (ido - 1)] * db };
@@ -208,16 +244,34 @@ fn pass7(ido: usize, l1: usize, cc: &[Complex], ch: &mut [Complex], wa: &[Comple
 
             ch[0 + ido * (k + l1 * 0)] = t1 + t2 + t3 + t4;
 
-            let ca = Complex::new(t1.r + TW1R * t2.r + TW2R * t3.r + TW3R * t4.r, t1.i + TW1R * t2.i + TW2R * t3.i + TW3R * t4.i);
-            let cb = Complex::new(-(tw1i * t7.i + tw2i * t6.i + tw3i * t5.i), tw1i * t7.r + tw2i * t6.r + tw3i * t5.r);
+            let ca = Complex::new(
+                t1.re + TW1R * t2.re + TW2R * t3.re + TW3R * t4.re,
+                t1.im + TW1R * t2.im + TW2R * t3.im + TW3R * t4.im
+            );
+            let cb = Complex::new(
+                -(tw1i * t7.im + tw2i * t6.im + tw3i * t5.im),
+                tw1i * t7.re + tw2i * t6.re + tw3i * t5.re
+            );
             (ch[0 + ido * (k + l1 * 1)], ch[0 + ido * (k + l1 * 6)]) = pmc(ca, cb);
 
-            let ca = Complex::new(t1.r + TW2R * t2.r + TW3R * t3.r + TW1R * t4.r, t1.i + TW2R * t2.i + TW3R * t3.i + TW1R * t4.i);
-            let cb = Complex::new(-(tw2i * t7.i - tw3i * t6.i - tw1i * t5.i), tw2i * t7.r - tw3i * t6.r - tw1i * t5.r);
+            let ca = Complex::new(
+                t1.re + TW2R * t2.re + TW3R * t3.re + TW1R * t4.re,
+                t1.im + TW2R * t2.im + TW3R * t3.im + TW1R * t4.im
+            );
+            let cb = Complex::new(
+                -(tw2i * t7.im - tw3i * t6.im - tw1i * t5.im),
+                tw2i * t7.re - tw3i * t6.re - tw1i * t5.re
+            );
             (ch[0 + ido * (k + l1 * 2)], ch[0 + ido * (k + l1 * 5)]) = pmc(ca, cb);
 
-            let ca = Complex::new(t1.r + TW3R * t2.r + TW1R * t3.r + TW2R * t4.r, t1.i + TW3R * t2.i + TW1R * t3.i + TW2R * t4.i);
-            let cb = Complex::new(-(tw3i * t7.i - tw1i * t6.i + tw2i * t5.i), tw3i * t7.r - tw1i * t6.r + tw2i * t5.r);
+            let ca = Complex::new(
+                t1.re + TW3R * t2.re + TW1R * t3.re + TW2R * t4.re,
+                t1.im + TW3R * t2.im + TW1R * t3.im + TW2R * t4.im
+            );
+            let cb = Complex::new(
+                -(tw3i * t7.im - tw1i * t6.im + tw2i * t5.im),
+                tw3i * t7.re - tw1i * t6.re + tw2i * t5.re
+            );
             (ch[0 + ido * (k + l1 * 3)], ch[0 + ido * (k + l1 * 4)]) = pmc(ca, cb);
         }
     }
@@ -230,16 +284,34 @@ fn pass7(ido: usize, l1: usize, cc: &[Complex], ch: &mut [Complex], wa: &[Comple
 
             ch[0 + ido * (k + l1 * 0)] = t1 + t2 + t3 + t4;
 
-            let ca = Complex::new(t1.r + TW1R * t2.r + TW2R * t3.r + TW3R * t4.r, t1.i + TW1R * t2.i + TW2R * t3.i + TW3R * t4.i);
-            let cb = Complex::new(-(tw1i * t7.i + tw2i * t6.i + tw3i * t5.i), tw1i * t7.r + tw2i * t6.r + tw3i * t5.r);
+            let ca = Complex::new(
+                t1.re + TW1R * t2.re + TW2R * t3.re + TW3R * t4.re,
+                t1.im + TW1R * t2.im + TW2R * t3.im + TW3R * t4.im
+            );
+            let cb = Complex::new(
+                -(tw1i * t7.im + tw2i * t6.im + tw3i * t5.im),
+                tw1i * t7.re + tw2i * t6.re + tw3i * t5.re
+            );
             (ch[0 + ido * (k + l1 * 1)], ch[0 + ido * (k + l1 * 6)]) = pmc(ca, cb);
 
-            let ca = Complex::new(t1.r + TW2R * t2.r + TW3R * t3.r + TW1R * t4.r, t1.i + TW2R * t2.i + TW3R * t3.i + TW1R * t4.i);
-            let cb = Complex::new(-(tw2i * t7.i - tw3i * t6.i - tw1i * t5.i), tw2i * t7.r - tw3i * t6.r - tw1i * t5.r);
+            let ca = Complex::new(
+                t1.re + TW2R * t2.re + TW3R * t3.re + TW1R * t4.re,
+                t1.im + TW2R * t2.im + TW3R * t3.im + TW1R * t4.im
+            );
+            let cb = Complex::new(
+                -(tw2i * t7.im - tw3i * t6.im - tw1i * t5.im),
+                tw2i * t7.re - tw3i * t6.re - tw1i * t5.re
+            );
             (ch[0 + ido * (k + l1 * 2)], ch[0 + ido * (k + l1 * 5)]) = pmc(ca, cb);
 
-            let ca = Complex::new(t1.r + TW3R * t2.r + TW1R * t3.r + TW2R * t4.r, t1.i + TW3R * t2.i + TW1R * t3.i + TW2R * t4.i);
-            let cb = Complex::new(-(tw3i * t7.i - tw1i * t6.i + tw2i * t5.i), tw3i * t7.r - tw1i * t6.r + tw2i * t5.r);
+            let ca = Complex::new(
+                t1.re + TW3R * t2.re + TW1R * t3.re + TW2R * t4.re,
+                t1.im + TW3R * t2.im + TW1R * t3.im + TW2R * t4.im
+            );
+            let cb = Complex::new(
+                -(tw3i * t7.im - tw1i * t6.im + tw2i * t5.im),
+                tw3i * t7.re - tw1i * t6.re + tw2i * t5.re
+            );
             (ch[0 + ido * (k + l1 * 3)], ch[0 + ido * (k + l1 * 4)]) = pmc(ca, cb);
 
             for i in 1..ido {
@@ -250,20 +322,38 @@ fn pass7(ido: usize, l1: usize, cc: &[Complex], ch: &mut [Complex], wa: &[Comple
 
                 ch[i + ido * (k + l1 * 0)] = t1 + t2 + t3 + t4;
 
-                let ca = Complex::new(t1.r + TW1R * t2.r + TW2R * t3.r + TW3R * t4.r, t1.i + TW1R * t2.i + TW2R * t3.i + TW3R * t4.i);
-                let cb = Complex::new(-(tw1i * t7.i + tw2i * t6.i + tw3i * t5.i), tw1i * t7.r + tw2i * t6.r + tw3i * t5.r);
+                let ca = Complex::new(
+                    t1.re + TW1R * t2.re + TW2R * t3.re + TW3R * t4.re,
+                    t1.im + TW1R * t2.im + TW2R * t3.im + TW3R * t4.im
+                );
+                let cb = Complex::new(
+                    -(tw1i * t7.im + tw2i * t6.im + tw3i * t5.im),
+                    tw1i * t7.re + tw2i * t6.re + tw3i * t5.re
+                );
                 let (da, db) = pmc(ca, cb);
                 ch[i + ido * (k + l1 * 1)] = if sign < 0 { wa[i - 1 + 0 * (ido - 1)].conj() * da } else { wa[i - 1 + 0 * (ido - 1)] * da };
                 ch[i + ido * (k + l1 * 6)] = if sign < 0 { wa[i - 1 + 5 * (ido - 1)].conj() * db } else { wa[i - 1 + 5 * (ido - 1)] * db };
 
-                let ca = Complex::new(t1.r + TW2R * t2.r + TW3R * t3.r + TW1R * t4.r, t1.i + TW2R * t2.i + TW3R * t3.i + TW1R * t4.i);
-                let cb = Complex::new(-(tw2i * t7.i - tw3i * t6.i - tw1i * t5.i), tw2i * t7.r - tw3i * t6.r - tw1i * t5.r);
+                let ca = Complex::new(
+                    t1.re + TW2R * t2.re + TW3R * t3.re + TW1R * t4.re,
+                    t1.im + TW2R * t2.im + TW3R * t3.im + TW1R * t4.im
+                );
+                let cb = Complex::new(
+                    -(tw2i * t7.im - tw3i * t6.im - tw1i * t5.im),
+                    tw2i * t7.re - tw3i * t6.re - tw1i * t5.re
+                );
                 let (da, db) = pmc(ca, cb);
                 ch[i + ido * (k + l1 * 2)] = if sign < 0 { wa[i - 1 + 1 * (ido - 1)].conj() * da } else { wa[i - 1 + 1 * (ido - 1)] * da };
                 ch[i + ido * (k + l1 * 5)] = if sign < 0 { wa[i - 1 + 4 * (ido - 1)].conj() * db } else { wa[i - 1 + 4 * (ido - 1)] * db };
 
-                let ca = Complex::new(t1.r + TW3R * t2.r + TW1R * t3.r + TW2R * t4.r, t1.i + TW3R * t2.i + TW1R * t3.i + TW2R * t4.i);
-                let cb = Complex::new(-(tw3i * t7.i - tw1i * t6.i + tw2i * t5.i), tw3i * t7.r - tw1i * t6.r + tw2i * t5.r);
+                let ca = Complex::new(
+                    t1.re + TW3R * t2.re + TW1R * t3.re + TW2R * t4.re,
+                    t1.im + TW3R * t2.im + TW1R * t3.im + TW2R * t4.im
+                );
+                let cb = Complex::new(
+                    -(tw3i * t7.im - tw1i * t6.im + tw2i * t5.im),
+                    tw3i * t7.re - tw1i * t6.re + tw2i * t5.re
+                );
                 let (da, db) = pmc(ca, cb);
                 ch[i + ido * (k + l1 * 3)] = if sign < 0 { wa[i - 1 + 2 * (ido - 1)].conj() * da } else { wa[i - 1 + 2 * (ido - 1)] * da };
                 ch[i + ido * (k + l1 * 4)] = if sign < 0 { wa[i - 1 + 3 * (ido - 1)].conj() * db } else { wa[i - 1 + 3 * (ido - 1)] * db };
@@ -296,24 +386,54 @@ fn pass11(ido: usize, l1: usize, cc: &[Complex], ch: &mut [Complex], wa: &[Compl
 
             ch[0 + ido * (k + l1 * 0)] = t1 + t2 + t3 + t4 + t5 + t6;
 
-            let ca = Complex::new(t1.r + TW1R * t2.r + TW2R * t3.r + TW3R * t4.r + TW4R * t5.r + TW5R * t6.r, t1.i + TW1R * t2.i + TW2R * t3.i + TW3R * t4.i + TW4R * t5.i + TW5R * t6.i);
-            let cb = Complex::new(-(tw1i * t11.i + tw2i * t10.i + tw3i * t9.i + tw4i * t8.i + tw5i * t7.i), tw1i * t11.r + tw2i * t10.r + tw3i * t9.r + tw4i * t8.r + tw5i * t7.r);
+            let ca = Complex::new(
+                t1.re + TW1R * t2.re + TW2R * t3.re + TW3R * t4.re + TW4R * t5.re + TW5R * t6.re,
+                t1.im + TW1R * t2.im + TW2R * t3.im + TW3R * t4.im + TW4R * t5.im + TW5R * t6.im
+            );
+            let cb = Complex::new(
+                -(tw1i * t11.im + tw2i * t10.im + tw3i * t9.im + tw4i * t8.im + tw5i * t7.im),
+                tw1i * t11.re + tw2i * t10.re + tw3i * t9.re + tw4i * t8.re + tw5i * t7.re
+            );
             (ch[0 + ido * (k + l1 * 1)], ch[0 + ido * (k + l1 * 10)]) = pmc(ca, cb);
 
-            let ca = Complex::new(t1.r + TW2R * t2.r + TW4R * t3.r + TW5R * t4.r + TW3R * t5.r + TW1R * t6.r, t1.i + TW2R * t2.i + TW4R * t3.i + TW5R * t4.i + TW3R * t5.i + TW1R * t6.i);
-            let cb = Complex::new(-(tw2i * t11.i + tw4i * t10.i - tw5i * t9.i - tw3i * t8.i - tw1i * t7.i), tw2i * t11.r + tw4i * t10.r - tw5i * t9.r - tw3i * t8.r - tw1i * t7.r);
+            let ca = Complex::new(
+                t1.re + TW2R * t2.re + TW4R * t3.re + TW5R * t4.re + TW3R * t5.re + TW1R * t6.re,
+                t1.im + TW2R * t2.im + TW4R * t3.im + TW5R * t4.im + TW3R * t5.im + TW1R * t6.im
+            );
+            let cb = Complex::new(
+                -(tw2i * t11.im + tw4i * t10.im - tw5i * t9.im - tw3i * t8.im - tw1i * t7.im),
+                tw2i * t11.re + tw4i * t10.re - tw5i * t9.re - tw3i * t8.re - tw1i * t7.re
+            );
             (ch[0 + ido * (k + l1 * 2)], ch[0 + ido * (k + l1 * 9)]) = pmc(ca, cb);
 
-            let ca = Complex::new(t1.r + TW3R * t2.r + TW5R * t3.r + TW2R * t4.r + TW1R * t5.r + TW4R * t6.r, t1.i + TW3R * t2.i + TW5R * t3.i + TW2R * t4.i + TW1R * t5.i + TW4R * t6.i);
-            let cb = Complex::new(-(tw3i * t11.i - tw5i * t10.i - tw2i * t9.i + tw1i * t8.i + tw4i * t7.i), tw3i * t11.r - tw5i * t10.r - tw2i * t9.r + tw1i * t8.r + tw4i * t7.r);
+            let ca = Complex::new(
+                t1.re + TW3R * t2.re + TW5R * t3.re + TW2R * t4.re + TW1R * t5.re + TW4R * t6.re,
+                t1.im + TW3R * t2.im + TW5R * t3.im + TW2R * t4.im + TW1R * t5.im + TW4R * t6.im
+            );
+            let cb = Complex::new(
+                -(tw3i * t11.im - tw5i * t10.im - tw2i * t9.im + tw1i * t8.im + tw4i * t7.im),
+                tw3i * t11.re - tw5i * t10.re - tw2i * t9.re + tw1i * t8.re + tw4i * t7.re
+            );
             (ch[0 + ido * (k + l1 * 3)], ch[0 + ido * (k + l1 * 8)]) = pmc(ca, cb);
 
-            let ca = Complex::new(t1.r + TW4R * t2.r + TW3R * t3.r + TW1R * t4.r + TW5R * t5.r + TW2R * t6.r, t1.i + TW4R * t2.i + TW3R * t3.i + TW1R * t4.i + TW5R * t5.i + TW2R * t6.i);
-            let cb = Complex::new(-(tw4i * t11.i - tw3i * t10.i + tw1i * t9.i + tw5i * t8.i - tw2i * t7.i), tw4i * t11.r - tw3i * t10.r + tw1i * t9.r + tw5i * t8.r - tw2i * t7.r);
+            let ca = Complex::new(
+                t1.re + TW4R * t2.re + TW3R * t3.re + TW1R * t4.re + TW5R * t5.re + TW2R * t6.re,
+                t1.im + TW4R * t2.im + TW3R * t3.im + TW1R * t4.im + TW5R * t5.im + TW2R * t6.im
+            );
+            let cb = Complex::new(
+                -(tw4i * t11.im - tw3i * t10.im + tw1i * t9.im + tw5i * t8.im - tw2i * t7.im),
+                tw4i * t11.re - tw3i * t10.re + tw1i * t9.re + tw5i * t8.re - tw2i * t7.re
+            );
             (ch[0 + ido * (k + l1 * 4)], ch[0 + ido * (k + l1 * 7)]) = pmc(ca, cb);
 
-            let ca = Complex::new(t1.r + TW5R * t2.r + TW1R * t3.r + TW4R * t4.r + TW2R * t5.r + TW3R * t6.r, t1.i + TW5R * t2.i + TW1R * t3.i + TW4R * t4.i + TW2R * t5.i + TW3R * t6.i);
-            let cb = Complex::new(-(tw5i * t11.i - tw1i * t10.i + tw4i * t9.i - tw2i * t8.i + tw3i * t7.i), tw5i * t11.r - tw1i * t10.r + tw4i * t9.r - tw2i * t8.r + tw3i * t7.r);
+            let ca = Complex::new(
+                t1.re + TW5R * t2.re + TW1R * t3.re + TW4R * t4.re + TW2R * t5.re + TW3R * t6.re,
+                t1.im + TW5R * t2.im + TW1R * t3.im + TW4R * t4.im + TW2R * t5.im + TW3R * t6.im
+            );
+            let cb = Complex::new(
+                -(tw5i * t11.im - tw1i * t10.im + tw4i * t9.im - tw2i * t8.im + tw3i * t7.im),
+                tw5i * t11.re - tw1i * t10.re + tw4i * t9.re - tw2i * t8.re + tw3i * t7.re
+            );
             (ch[0 + ido * (k + l1 * 5)], ch[0 + ido * (k + l1 * 6)]) = pmc(ca, cb);
         }
     }
@@ -328,24 +448,54 @@ fn pass11(ido: usize, l1: usize, cc: &[Complex], ch: &mut [Complex], wa: &[Compl
 
             ch[0 + ido * (k + l1 * 0)] = t1 + t2 + t3 + t4 + t5 + t6;
 
-            let ca = Complex::new( t1.r + TW1R * t2.r + TW2R * t3.r + TW3R * t4.r + TW4R * t5.r + TW5R * t6.r, t1.i + TW1R * t2.i + TW2R * t3.i + TW3R * t4.i + TW4R * t5.i + TW5R * t6.i);
-            let cb = Complex::new(-(tw1i * t11.i + tw2i * t10.i + tw3i * t9.i + tw4i * t8.i + tw5i * t7.i), tw1i * t11.r + tw2i * t10.r + tw3i * t9.r + tw4i * t8.r + tw5i * t7.r);
+            let ca = Complex::new( 
+                t1.re + TW1R * t2.re + TW2R * t3.re + TW3R * t4.re + TW4R * t5.re + TW5R * t6.re,
+                t1.im + TW1R * t2.im + TW2R * t3.im + TW3R * t4.im + TW4R * t5.im + TW5R * t6.im
+            );
+            let cb = Complex::new(
+                -(tw1i * t11.im + tw2i * t10.im + tw3i * t9.im + tw4i * t8.im + tw5i * t7.im),
+                tw1i * t11.re + tw2i * t10.re + tw3i * t9.re + tw4i * t8.re + tw5i * t7.re
+            );
             (ch[0 + ido * (k + l1 * 1)], ch[0 + ido * (k + l1 * 10)]) = pmc(ca, cb);
 
-            let ca = Complex::new(t1.r + TW2R * t2.r + TW4R * t3.r + TW5R * t4.r + TW3R * t5.r + TW1R * t6.r, t1.i + TW2R * t2.i + TW4R * t3.i + TW5R * t4.i + TW3R * t5.i + TW1R * t6.i);
-            let cb = Complex::new(-(tw2i * t11.i + tw4i * t10.i - tw5i * t9.i - tw3i * t8.i - tw1i * t7.i), tw2i * t11.r + tw4i * t10.r - tw5i * t9.r - tw3i * t8.r - tw1i * t7.r);
+            let ca = Complex::new(
+                t1.re + TW2R * t2.re + TW4R * t3.re + TW5R * t4.re + TW3R * t5.re + TW1R * t6.re,
+                t1.im + TW2R * t2.im + TW4R * t3.im + TW5R * t4.im + TW3R * t5.im + TW1R * t6.im
+            );
+            let cb = Complex::new(
+                -(tw2i * t11.im + tw4i * t10.im - tw5i * t9.im - tw3i * t8.im - tw1i * t7.im),
+                tw2i * t11.re + tw4i * t10.re - tw5i * t9.re - tw3i * t8.re - tw1i * t7.re
+            );
             (ch[0 + ido * (k + l1 * 2)], ch[0 + ido * (k + l1 * 9)]) = pmc(ca, cb);
 
-            let ca = Complex::new(t1.r + TW3R * t2.r + TW5R * t3.r + TW2R * t4.r + TW1R * t5.r + TW4R * t6.r, t1.i + TW3R * t2.i + TW5R * t3.i + TW2R * t4.i + TW1R * t5.i + TW4R * t6.i);
-            let cb = Complex::new(-(tw3i * t11.i - tw5i * t10.i - tw2i * t9.i + tw1i * t8.i + tw4i * t7.i), tw3i * t11.r - tw5i * t10.r - tw2i * t9.r + tw1i * t8.r + tw4i * t7.r);
+            let ca = Complex::new(
+                t1.re + TW3R * t2.re + TW5R * t3.re + TW2R * t4.re + TW1R * t5.re + TW4R * t6.re,
+                t1.im + TW3R * t2.im + TW5R * t3.im + TW2R * t4.im + TW1R * t5.im + TW4R * t6.im
+            );
+            let cb = Complex::new(
+                -(tw3i * t11.im - tw5i * t10.im - tw2i * t9.im + tw1i * t8.im + tw4i * t7.im),
+                tw3i * t11.re - tw5i * t10.re - tw2i * t9.re + tw1i * t8.re + tw4i * t7.re
+            );
             (ch[0 + ido * (k + l1 * 3)], ch[0 + ido * (k + l1 * 8)]) = pmc(ca, cb);
 
-            let ca = Complex::new(t1.r + TW4R * t2.r + TW3R * t3.r + TW1R * t4.r + TW5R * t5.r + TW2R * t6.r, t1.i + TW4R * t2.i + TW3R * t3.i + TW1R * t4.i + TW5R * t5.i + TW2R * t6.i);
-            let cb = Complex::new(-(tw4i * t11.i - tw3i * t10.i + tw1i * t9.i + tw5i * t8.i - tw2i * t7.i), tw4i * t11.r - tw3i * t10.r + tw1i * t9.r + tw5i * t8.r - tw2i * t7.r);
+            let ca = Complex::new(
+                t1.re + TW4R * t2.re + TW3R * t3.re + TW1R * t4.re + TW5R * t5.re + TW2R * t6.re,
+                t1.im + TW4R * t2.im + TW3R * t3.im + TW1R * t4.im + TW5R * t5.im + TW2R * t6.im
+            );
+            let cb = Complex::new(
+                -(tw4i * t11.im - tw3i * t10.im + tw1i * t9.im + tw5i * t8.im - tw2i * t7.im),
+                tw4i * t11.re - tw3i * t10.re + tw1i * t9.re + tw5i * t8.re - tw2i * t7.re
+            );
             (ch[0 + ido * (k + l1 * 4)], ch[0 + ido * (k + l1 * 7)]) = pmc(ca, cb);
 
-            let ca = Complex::new(t1.r + TW5R * t2.r + TW1R * t3.r + TW4R * t4.r + TW2R * t5.r + TW3R * t6.r, t1.i + TW5R * t2.i + TW1R * t3.i + TW4R * t4.i + TW2R * t5.i + TW3R * t6.i);
-            let cb = Complex::new(-(tw5i * t11.i - tw1i * t10.i + tw4i * t9.i - tw2i * t8.i + tw3i * t7.i), tw5i * t11.r - tw1i * t10.r + tw4i * t9.r - tw2i * t8.r + tw3i * t7.r);
+            let ca = Complex::new(
+                t1.re + TW5R * t2.re + TW1R * t3.re + TW4R * t4.re + TW2R * t5.re + TW3R * t6.re,
+                t1.im + TW5R * t2.im + TW1R * t3.im + TW4R * t4.im + TW2R * t5.im + TW3R * t6.im
+            );
+            let cb = Complex::new(
+                -(tw5i * t11.im - tw1i * t10.im + tw4i * t9.im - tw2i * t8.im + tw3i * t7.im),
+                tw5i * t11.re - tw1i * t10.re + tw4i * t9.re - tw2i * t8.re + tw3i * t7.re
+            );
             (ch[0 + ido * (k + l1 * 5)], ch[0 + ido * (k + l1 * 6)]) = pmc(ca, cb);
 
             for i in 1..ido {
@@ -358,32 +508,62 @@ fn pass11(ido: usize, l1: usize, cc: &[Complex], ch: &mut [Complex], wa: &[Compl
 
                 ch[i + ido * (k + l1 * 0)] = t1 + t2 + t3 + t4 + t5 + t6;
 
-                let ca = Complex::new(t1.r + TW1R * t2.r + TW2R * t3.r + TW3R * t4.r + TW4R * t5.r + TW5R * t6.r, t1.i + TW1R * t2.i + TW2R * t3.i + TW3R * t4.i + TW4R * t5.i + TW5R * t6.i);
-                let cb = Complex::new(-(tw1i * t11.i + tw2i * t10.i + tw3i * t9.i + tw4i * t8.i + tw5i * t7.i), tw1i * t11.r + tw2i * t10.r + tw3i * t9.r + tw4i * t8.r + tw5i * t7.r);
+                let ca = Complex::new(
+                    t1.re + TW1R * t2.re + TW2R * t3.re + TW3R * t4.re + TW4R * t5.re + TW5R * t6.re,
+                    t1.im + TW1R * t2.im + TW2R * t3.im + TW3R * t4.im + TW4R * t5.im + TW5R * t6.im
+                );
+                let cb = Complex::new(
+                    -(tw1i * t11.im + tw2i * t10.im + tw3i * t9.im + tw4i * t8.im + tw5i * t7.im),
+                    tw1i * t11.re + tw2i * t10.re + tw3i * t9.re + tw4i * t8.re + tw5i * t7.re
+                );
                 let (da, db) = pmc(ca, cb);
                 ch[i + ido * (k + l1 * 1)] = if sign < 0 { wa[i - 1 + 0 * (ido - 1)].conj() * da } else { wa[i - 1 + 0 * (ido - 1)] * da };
                 ch[i + ido * (k + l1 * 10)] = if sign < 0 { wa[i - 1 + 9 * (ido - 1)].conj() * db } else { wa[i - 1 + 9 * (ido - 1)] * db };
 
-                let ca = Complex::new(t1.r + TW2R * t2.r + TW4R * t3.r + TW5R * t4.r + TW3R * t5.r + TW1R * t6.r, t1.i + TW2R * t2.i + TW4R * t3.i + TW5R * t4.i + TW3R * t5.i + TW1R * t6.i);
-                let cb = Complex::new(-(tw2i * t11.i + tw4i * t10.i - tw5i * t9.i - tw3i * t8.i - tw1i * t7.i), tw2i * t11.r + tw4i * t10.r - tw5i * t9.r - tw3i * t8.r - tw1i * t7.r);
+                let ca = Complex::new(
+                    t1.re + TW2R * t2.re + TW4R * t3.re + TW5R * t4.re + TW3R * t5.re + TW1R * t6.re,
+                    t1.im + TW2R * t2.im + TW4R * t3.im + TW5R * t4.im + TW3R * t5.im + TW1R * t6.im
+                );
+                let cb = Complex::new(
+                    -(tw2i * t11.im + tw4i * t10.im - tw5i * t9.im - tw3i * t8.im - tw1i * t7.im),
+                    tw2i * t11.re + tw4i * t10.re - tw5i * t9.re - tw3i * t8.re - tw1i * t7.re
+                );
                 let (da, db) = pmc(ca, cb);
                 ch[i + ido * (k + l1 * 2)] = if sign < 0 { wa[i - 1 + 1 * (ido - 1)].conj() * da } else { wa[i - 1 + 1 * (ido - 1)] * da };
                 ch[i + ido * (k + l1 * 9)] = if sign < 0 { wa[i - 1 + 8 * (ido - 1)].conj() * db } else { wa[i - 1 + 8 * (ido - 1)] * db };
 
-                let ca = Complex::new(t1.r + TW3R * t2.r + TW5R * t3.r + TW2R * t4.r + TW1R * t5.r + TW4R * t6.r, t1.i + TW3R * t2.i + TW5R * t3.i + TW2R * t4.i + TW1R * t5.i + TW4R * t6.i);
-                let cb = Complex::new(-(tw3i * t11.i - tw5i * t10.i - tw2i * t9.i + tw1i * t8.i + tw4i * t7.i), tw3i * t11.r - tw5i * t10.r - tw2i * t9.r + tw1i * t8.r + tw4i * t7.r);
+                let ca = Complex::new(
+                    t1.re + TW3R * t2.re + TW5R * t3.re + TW2R * t4.re + TW1R * t5.re + TW4R * t6.re,
+                    t1.im + TW3R * t2.im + TW5R * t3.im + TW2R * t4.im + TW1R * t5.im + TW4R * t6.im
+                );
+                let cb = Complex::new(
+                    -(tw3i * t11.im - tw5i * t10.im - tw2i * t9.im + tw1i * t8.im + tw4i * t7.im),
+                    tw3i * t11.re - tw5i * t10.re - tw2i * t9.re + tw1i * t8.re + tw4i * t7.re
+                );
                 let (da, db) = pmc(ca, cb);
                 ch[i + ido * (k + l1 * 3)] = if sign < 0 { wa[i - 1 + 2 * (ido - 1)].conj() * da } else { wa[i - 1 + 2 * (ido - 1)] * da };
                 ch[i + ido * (k + l1 * 8)] = if sign < 0 { wa[i - 1 + 7 * (ido - 1)].conj() * db } else { wa[i - 1 + 7 * (ido - 1)] * db };
 
-                let ca = Complex::new(t1.r + TW4R * t2.r + TW3R * t3.r + TW1R * t4.r + TW5R * t5.r + TW2R * t6.r, t1.i + TW4R * t2.i + TW3R * t3.i + TW1R * t4.i + TW5R * t5.i + TW2R * t6.i);
-                let cb = Complex::new(-(tw4i * t11.i - tw3i * t10.i + tw1i * t9.i + tw5i * t8.i - tw2i * t7.i), tw4i * t11.r - tw3i * t10.r + tw1i * t9.r + tw5i * t8.r - tw2i * t7.r);
+                let ca = Complex::new(
+                    t1.re + TW4R * t2.re + TW3R * t3.re + TW1R * t4.re + TW5R * t5.re + TW2R * t6.re,
+                    t1.im + TW4R * t2.im + TW3R * t3.im + TW1R * t4.im + TW5R * t5.im + TW2R * t6.im
+                );
+                let cb = Complex::new(
+                    -(tw4i * t11.im - tw3i * t10.im + tw1i * t9.im + tw5i * t8.im - tw2i * t7.im),
+                    tw4i * t11.re - tw3i * t10.re + tw1i * t9.re + tw5i * t8.re - tw2i * t7.re
+                );
                 let (da, db) = pmc(ca, cb);
                 ch[i + ido * (k + l1 * 4)] = if sign < 0 { wa[i - 1 + 3 * (ido - 1)].conj() * da } else { wa[i - 1 + 3 * (ido - 1)] * da };
                 ch[i + ido * (k + l1 * 7)] = if sign < 0 { wa[i - 1 + 6 * (ido - 1)].conj() * db } else { wa[i - 1 + 6 * (ido - 1)] * db };
 
-                let ca = Complex::new(t1.r + TW5R * t2.r + TW1R * t3.r + TW4R * t4.r + TW2R * t5.r + TW3R * t6.r, t1.i + TW5R * t2.i + TW1R * t3.i + TW4R * t4.i + TW2R * t5.i + TW3R * t6.i);
-                let cb = Complex::new(-(tw5i * t11.i - tw1i * t10.i + tw4i * t9.i - tw2i * t8.i + tw3i * t7.i), tw5i * t11.r - tw1i * t10.r + tw4i * t9.r - tw2i * t8.r + tw3i * t7.r);
+                let ca = Complex::new(
+                    t1.re + TW5R * t2.re + TW1R * t3.re + TW4R * t4.re + TW2R * t5.re + TW3R * t6.re,
+                    t1.im + TW5R * t2.im + TW1R * t3.im + TW4R * t4.im + TW2R * t5.im + TW3R * t6.im
+                );
+                let cb = Complex::new(
+                    -(tw5i * t11.im - tw1i * t10.im + tw4i * t9.im - tw2i * t8.im + tw3i * t7.im),
+                    tw5i * t11.re - tw1i * t10.re + tw4i * t9.re - tw2i * t8.re + tw3i * t7.re
+                );
                 let (da, db) = pmc(ca, cb);
                 ch[i + ido * (k + l1 * 5)] = if sign < 0 { wa[i - 1 + 4 * (ido - 1)].conj() * da } else { wa[i - 1 + 4 * (ido - 1)] * da };
                 ch[i + ido * (k + l1 * 6)] = if sign < 0 { wa[i - 1 + 5 * (ido - 1)].conj() * db } else { wa[i - 1 + 5 * (ido - 1)] * db };
@@ -399,7 +579,7 @@ fn passg(ido: usize, ip: usize, l1: usize, cc: &mut [Complex], ch: &mut [Complex
 
     let mut wal = vec![Complex::new(0.0, 0.0); ip];
     wal[0] = Complex::new(1.0, 0.0);
-    for i in 1..ip { wal[i] = Complex::new(csarr[i].r, sign as f64 * csarr[i].i); }
+    for i in 1..ip { wal[i] = Complex::new(csarr[i].re, sign as f64 * csarr[i].im); }
 
     for k in 0..l1 {
         for i in 0..ido {
@@ -430,8 +610,14 @@ fn passg(ido: usize, ip: usize, l1: usize, cc: &mut [Complex], ch: &mut [Complex
         let lc = ip - l;
 
         for ik in 0..idl1 {
-            cc[ik + idl1 * l] = Complex::new(ch[ik + idl1 * 0].r + wal[l].r * ch[ik + idl1 * 1].r + wal[2 * l].r * ch[ik + idl1 * 2].r, ch[ik + idl1 * 0].i + wal[l].r * ch[ik + idl1 * 1].i + wal[2 * l].r * ch[ik + idl1 * 2].i);
-            cc[ik + idl1 * lc] = Complex::new(-wal[l].i * ch[ik + idl1 * (ip - 1)].i - wal[2 * l].i * ch[ik + idl1 * (ip - 2)].i, wal[l].i * ch[ik + idl1 * (ip - 1)].r + wal[2 * l].i * ch[ik + idl1 * (ip - 2)].r);
+            cc[ik + idl1 * l] = Complex::new(
+                ch[ik + idl1 * 0].re + wal[l].re * ch[ik + idl1 * 1].re + wal[2 * l].re * ch[ik + idl1 * 2].re,
+                ch[ik + idl1 * 0].im + wal[l].re * ch[ik + idl1 * 1].im + wal[2 * l].re * ch[ik + idl1 * 2].im
+            );
+            cc[ik + idl1 * lc] = Complex::new(
+                -wal[l].im * ch[ik + idl1 * (ip - 1)].im - wal[2 * l].im * ch[ik + idl1 * (ip - 2)].im,
+                wal[l].im * ch[ik + idl1 * (ip - 1)].re + wal[2 * l].im * ch[ik + idl1 * (ip - 2)].re
+            );
         }
 
         let mut iwal = 2 * l;
@@ -448,10 +634,10 @@ fn passg(ido: usize, ip: usize, l1: usize, cc: &mut [Complex], ch: &mut [Complex
             let xwal2 = wal[iwal];
 
             for ik in 0..idl1 {
-                cc[ik + idl1 * l].r += ch[ik + idl1 * j].r * xwal.r + ch[ik + idl1 * (j + 1)].r * xwal2.r;
-                cc[ik + idl1 * l].i += ch[ik + idl1 * j].i * xwal.r + ch[ik + idl1 * (j + 1)].i * xwal2.r;
-                cc[ik + idl1 * lc].r -= ch[ik + idl1 * jc].i * xwal.i + ch[ik + idl1 * (jc - 1)].i * xwal2.i;
-                cc[ik + idl1 * lc].i += ch[ik + idl1 * jc].r * xwal.i + ch[ik + idl1 * (jc - 1)].r * xwal2.i;
+                cc[ik + idl1 * l].re += ch[ik + idl1 * j].re * xwal.re + ch[ik + idl1 * (j + 1)].re * xwal2.re;
+                cc[ik + idl1 * l].im += ch[ik + idl1 * j].im * xwal.re + ch[ik + idl1 * (j + 1)].im * xwal2.re;
+                cc[ik + idl1 * lc].re -= ch[ik + idl1 * jc].im * xwal.im + ch[ik + idl1 * (jc - 1)].im * xwal2.im;
+                cc[ik + idl1 * lc].im += ch[ik + idl1 * jc].re * xwal.im + ch[ik + idl1 * (jc - 1)].re * xwal2.im;
             }
             j += 2;
             jc -= 2;
@@ -463,10 +649,10 @@ fn passg(ido: usize, ip: usize, l1: usize, cc: &mut [Complex], ch: &mut [Complex
             let xwal = wal[iwal];
 
             for ik in 0..idl1 {
-                cc[ik + idl1 * l].r += ch[ik + idl1 * j].r * xwal.r;
-                cc[ik + idl1 * l].i += ch[ik + idl1 * j].i * xwal.r;
-                cc[ik + idl1 * lc].r -= ch[ik + idl1 * jc].i * xwal.i;
-                cc[ik + idl1 * lc].i += ch[ik + idl1 * jc].r * xwal.i;
+                cc[ik + idl1 * l].re += ch[ik + idl1 * j].re * xwal.re;
+                cc[ik + idl1 * l].im += ch[ik + idl1 * j].im * xwal.re;
+                cc[ik + idl1 * lc].re -= ch[ik + idl1 * jc].im * xwal.im;
+                cc[ik + idl1 * lc].im += ch[ik + idl1 * jc].re * xwal.im;
             }
             j += 1;
             jc -= 1;

@@ -57,7 +57,7 @@ fn calc_first_quadrant(n: usize, res: &mut [Complex]) {
 
     while i + 1 < ndone {
         head[idx1] = p[i];
-        head[idx2] = Complex::new(p[i + 1].i, p[i + 1].r);
+        head[idx2] = Complex::new(p[i + 1].im, p[i + 1].re);
         i += 2; idx1 += 1; idx2 -= 1;
     }
     if i != ndone {
@@ -105,7 +105,7 @@ fn fill_first_quadrant(n: usize, res: &mut [Complex]) {
     }
 
     for (i, j) in (1..=eighth).zip((0..quart).rev()) {
-        res[j] = Complex::new(res[i].i, res[i].r);
+        res[j] = Complex::new(res[i].im, res[i].re);
     }
 }
 
@@ -114,12 +114,12 @@ fn fill_first_half(n: usize, res: &mut [Complex]) {
     let quart = n >> 2;
     if (n & 3) == 0 {
         for i in 0..quart {
-            res[quart + i] = Complex::new(-res[i].i, res[i].r);
+            res[quart + i] = Complex::new(-res[i].im, res[i].re);
         }
     }
     else {
         for (i, j) in (1..=quart).zip((0..half).rev()) {
-            res[j] = Complex::new(-res[i].r, res[i].i);
+            res[j] = Complex::new(-res[i].re, res[i].im);
         }
     }
 }

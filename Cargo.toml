@@ -1,7 +1,14 @@
 [package]
 name = "palmfft"
-version = "1.1.2"
+version = "1.2.0"
 edition = "2024"
 description = "Palm-sized Faster Fourier Transform"
 repository = "https://github.com/H4n-uL/PalmFFT"
 license = "BSD-3-Clause"
+
+[features]
+default = ["stddep"]
+stddep = ["num-complex"]
+
+[dependencies]
+num-complex = { version = "0.4.6", optional = true }
