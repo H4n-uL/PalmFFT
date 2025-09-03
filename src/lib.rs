@@ -1,16 +1,27 @@
-mod complex; mod algorithms; mod math;
-pub use complex::Complex;
+mod algorithms; mod math;
 pub use algorithms::CfftPlan;
 
-#[cfg(feature = "stddep")]
-pub use num_complex::Complex64 as NumComplex;
+#[cfg(feature = "num-complex")]
+pub use num_complex::Complex64 as Complex;
 
-#[cfg(feature = "stddep")]
-impl From<NumComplex> for Complex {
-    #[inline] fn from(c: NumComplex) -> Self { Self::new(c.re, c.im) }
+#[cfg(not(feature = "num-complex"))]
+mod complex;
+#[cfg(not(feature = "num-complex"))]
+pub use complex::Complex;
+
+pub trait ComplexExt {
+    fn rot90(&self) -> Self;
+    fn rotm90(&self) -> Self;
 }
 
-#[cfg(feature = "stddep")]
-impl From<Complex> for NumComplex {
-    #[inline] fn from(c: Complex) -> Self { Self::new(c.re, c.im) }
+impl ComplexExt for Complex {
+    #[inline]
+    fn rot90(&self) -> Self {
+        Complex::new(-self.im, self.re)
+    }
+    
+    #[inline]
+    fn rotm90(&self) -> Self {
+        Complex::new(self.im, -self.re)
+    }
 }

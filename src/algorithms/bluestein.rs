@@ -1,6 +1,6 @@
 use crate::{
     algorithms::cooleytukey::CooleyTukey,
-    complex::Complex,
+    Complex,
     math::{good_size, sincos_2pibyn}
 };
 

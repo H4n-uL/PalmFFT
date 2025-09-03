@@ -1,4 +1,4 @@
-use crate::complex::Complex;
+use crate::{Complex, ComplexExt};
 
 pub fn my_sincosm1pi(a: f64) -> Complex {
     let mut s = a * a;

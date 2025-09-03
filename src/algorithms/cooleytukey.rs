@@ -1,6 +1,5 @@
 use crate::{
-    complex::Complex,
-    math::sincos_2pibyn
+    math::sincos_2pibyn, Complex, ComplexExt
 };
 
 fn pmc(a: Complex, b: Complex) -> (Complex, Complex) { (a + b, a - b) }

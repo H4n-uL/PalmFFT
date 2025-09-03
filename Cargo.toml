@@ -6,9 +6,5 @@ description = "Palm-sized Faster Fourier Transform"
 repository = "https://github.com/H4n-uL/PalmFFT"
 license = "BSD-3-Clause"
 
-[features]
-default = ["stddep"]
-stddep = ["num-complex"]
-
 [dependencies]
 num-complex = { version = "0.4.6", optional = true }

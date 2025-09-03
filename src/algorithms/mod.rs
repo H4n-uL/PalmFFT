@@ -2,7 +2,7 @@ pub mod bluestein; pub mod cooleytukey;
 use self::{bluestein::Bluestein, cooleytukey::CooleyTukey};
 use crate::{
     math::{cost_guess, good_size, largest_prime_factor},
-    complex::Complex
+    Complex
 };
 
 pub struct CfftPlan {

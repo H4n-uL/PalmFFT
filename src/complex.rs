@@ -1,3 +1,4 @@
+use crate::ComplexExt;
 use core::ops::{Neg, Add, Sub, Mul, Div, AddAssign, SubAssign, MulAssign, DivAssign};
 use std::fmt::{Debug, Display};
 
@@ -11,8 +12,6 @@ impl Complex {
     #[inline] pub fn i() -> Self { Self { re: 0.0, im: 1.0 } }
 
     #[inline] pub fn conj(&self) -> Self { Self { re: self.re, im: -self.im } } // conjugate
-    #[inline] pub fn rot90(&self) -> Self { Self { re: -self.im, im: self.re } } // rotate 90 degrees
-    #[inline] pub fn rotm90(&self) -> Self { Self { re: self.im, im: -self.re } } // rotate -90 degrees
     #[inline] pub fn dot(&self, rhs: Complex) -> f64 { self.re * rhs.re + self.im * rhs.im } // dot product
     #[inline] pub fn norm_sqr(&self) -> f64 { self.dot(*self) } // complex norm squared
     #[inline] pub fn norm(&self) -> f64 { self.norm_sqr().sqrt() } // complex norm
