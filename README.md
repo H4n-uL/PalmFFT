@@ -11,7 +11,7 @@ I wanted to release this repository as Public Domain but released as BSD 3-claus
 - Complex FFT, Basic complex arithmetics. That's it.
 - Real FFT? No, I have my life.
 - Try searching unsafe, You won't find any
-- Dependency? Is that something I can eat? (unless y activate `num-complex` feature)
+- Peak Dependency Minimalism™
 
 ## How to use
 

@@ -1,6 +1,9 @@
 use crate::ComplexExt;
-use core::ops::{Neg, Add, Sub, Mul, Div, AddAssign, SubAssign, MulAssign, DivAssign};
-use std::fmt::{Debug, Display};
+use core::{
+    fmt::{Debug, Display, Formatter, Result},
+    ops::{Add, AddAssign, Div, DivAssign, Mul, MulAssign, Neg, Sub, SubAssign}
+};
+use libm::*;
 
 #[derive(Clone, Copy, PartialEq)]
 pub struct Complex { pub re: f64, pub im: f64 }
@@ -14,17 +17,17 @@ impl Complex {
     #[inline] pub fn conj(&self) -> Self { Self { re: self.re, im: -self.im } } // conjugate
     #[inline] pub fn dot(&self, rhs: Complex) -> f64 { self.re * rhs.re + self.im * rhs.im } // dot product
     #[inline] pub fn norm_sqr(&self) -> f64 { self.dot(*self) } // complex norm squared
-    #[inline] pub fn norm(&self) -> f64 { self.norm_sqr().sqrt() } // complex norm
-    #[inline] pub fn arg(&self) -> f64 { self.im.atan2(self.re) } // complex argument
+    #[inline] pub fn norm(&self) -> f64 { sqrt(self.norm_sqr()) } // complex norm
+    #[inline] pub fn arg(&self) -> f64 { atan2(self.im, self.re) } // complex argument
 
     #[inline] pub fn to_polar(&self) -> (f64, f64) { (self.norm(), self.arg()) } // convert to polar form
-    #[inline] pub fn from_polar(re: f64, theta: f64) -> Self { Self { re: theta.cos(), im: theta.sin() } * re } // convert from polar form
+    #[inline] pub fn from_polar(re: f64, theta: f64) -> Self { Self { re: cos(theta), im: sin(theta) } * re } // convert from polar form
 
-    #[inline] pub fn exp(&self) -> Self { Complex::from_polar(self.re.exp(), self.im) } // complex natural exponentation
-    #[inline] pub fn ln(&self) -> Self { Self { re: self.norm().ln(), im: self.arg() } } // complex natural logarithm
+    #[inline] pub fn exp(&self) -> Self { Complex::from_polar(exp(self.re), self.im) } // complex natural exponentation
+    #[inline] pub fn ln(&self) -> Self { Self { re: log(self.norm()), im: self.arg() } } // complex natural logarithm
 
-    #[inline] pub fn powf(&self, rhs: f64) -> Self { Complex::from_polar(self.norm().powf(rhs), rhs * self.arg()) }
-    #[inline] pub fn powc(&self, rhs: Complex) -> Self { Complex::from_polar(rhs.dot(self.ln().conj()).exp(), rhs.dot(self.ln().conj().rot90())) } 
+    #[inline] pub fn powf(&self, rhs: f64) -> Self { Complex::from_polar(pow(self.norm(), rhs), rhs * self.arg()) }
+    #[inline] pub fn powc(&self, rhs: Complex) -> Self { Complex::from_polar(exp(rhs.dot(self.ln().conj())), rhs.dot(self.ln().conj().rot90())) } 
     #[inline] pub fn rootf(&self, rhs: f64) -> Self { self.powf(1.0 / rhs) }
     #[inline] pub fn rootc(&self, rhs: Complex) -> Self { self.powc(1.0 / rhs) }
 
@@ -36,7 +39,7 @@ impl Complex {
 }
 
 impl Display for Complex {
-    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+    fn fmt(&self, f: &mut Formatter<'_>) -> Result {
         match (self.re, self.im) {
             (0.0, 0.0) => write!(f, "0"),
             (0.0, _) => write!(f, "{}i", self.im),
@@ -47,7 +50,7 @@ impl Display for Complex {
 }
 
 impl Debug for Complex {
-    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+    fn fmt(&self, f: &mut Formatter<'_>) -> Result {
         match (self.re, self.im) {
             (0.0, 0.0) => write!(f, "0"),
             (0.0, _) => write!(f, "{}i", self.im),

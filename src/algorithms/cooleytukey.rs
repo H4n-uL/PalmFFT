@@ -1,10 +1,12 @@
 use crate::{
-    math::sincos_2pibyn, Complex, ComplexExt
+    math::sincos_2pibyn, Complex, ComplexExt, Result
 };
+
+use alloc::vec::Vec;
 
 fn pmc(a: Complex, b: Complex) -> (Complex, Complex) { (a + b, a - b) }
 
-fn pass2(ido: usize, l1: usize, cc: &[Complex], ch: &mut [Complex], wa: &[Complex], sign: i32) {
+fn pass2(ido: usize, l1: usize, cc: &[Complex], ch: &mut [Complex], wa: &[Complex], sign: i8) {
     let cdim = 2;
     if ido == 1 {
         for k in 0..l1 {
@@ -24,7 +26,7 @@ fn pass2(ido: usize, l1: usize, cc: &[Complex], ch: &mut [Complex], wa: &[Comple
     }
 }
 
-fn pass3(ido: usize, l1: usize, cc: &[Complex], ch: &mut [Complex], wa: &[Complex], sign: i32) {
+fn pass3(ido: usize, l1: usize, cc: &[Complex], ch: &mut [Complex], wa: &[Complex], sign: i8) {
     let cdim = 3;
     const TW1R: f64 = -0.5;
     let tw1i = (sign as f64) * 0.86602540378443864676;
@@ -77,7 +79,7 @@ fn pass3(ido: usize, l1: usize, cc: &[Complex], ch: &mut [Complex], wa: &[Comple
     }
 }
 
-fn pass4(ido: usize, l1: usize, cc: &[Complex], ch: &mut [Complex], wa: &[Complex], sign: i32) {
+fn pass4(ido: usize, l1: usize, cc: &[Complex], ch: &mut [Complex], wa: &[Complex], sign: i8) {
     let cdim = 4;
 
     if ido == 1 {
@@ -126,7 +128,7 @@ fn pass4(ido: usize, l1: usize, cc: &[Complex], ch: &mut [Complex], wa: &[Comple
     }
 }
 
-fn pass5(ido: usize, l1: usize, cc: &[Complex], ch: &mut [Complex], wa: &[Complex], sign: i32) {
+fn pass5(ido: usize, l1: usize, cc: &[Complex], ch: &mut [Complex], wa: &[Complex], sign: i8) {
     let cdim = 5;
     const TW1R: f64 = 0.3090169943749474241;
     const TW2R: f64 = -0.8090169943749474241;
@@ -225,7 +227,7 @@ fn pass5(ido: usize, l1: usize, cc: &[Complex], ch: &mut [Complex], wa: &[Comple
     }
 }
 
-fn pass7(ido: usize, l1: usize, cc: &[Complex], ch: &mut [Complex], wa: &[Complex], sign: i32) {
+fn pass7(ido: usize, l1: usize, cc: &[Complex], ch: &mut [Complex], wa: &[Complex], sign: i8) {
     let cdim = 7;
     const TW1R: f64 = 0.623489801858733530525;
     const TW2R: f64 = -0.222520933956314404289;
@@ -361,7 +363,7 @@ fn pass7(ido: usize, l1: usize, cc: &[Complex], ch: &mut [Complex], wa: &[Comple
     }
 }
 
-fn pass11(ido: usize, l1: usize, cc: &[Complex], ch: &mut [Complex], wa: &[Complex], sign: i32) {
+fn pass11(ido: usize, l1: usize, cc: &[Complex], ch: &mut [Complex], wa: &[Complex], sign: i8) {
     let cdim = 11;
     const TW1R: f64 = 0.8412535328311811688618;
     const TW2R: f64 = 0.4154150130018864255293;
@@ -571,12 +573,12 @@ fn pass11(ido: usize, l1: usize, cc: &[Complex], ch: &mut [Complex], wa: &[Compl
     }
 }
 
-fn passg(ido: usize, ip: usize, l1: usize, cc: &mut [Complex], ch: &mut [Complex], wa: &[Complex], csarr: &[Complex], sign: i32) {
+fn passg(ido: usize, ip: usize, l1: usize, cc: &mut [Complex], ch: &mut [Complex], wa: &[Complex], csarr: &[Complex], sign: i8) {
     let cdim = ip;
     let ipph = (ip + 1) >> 1;
     let idl1 = ido * l1;
 
-    let mut wal = vec![Complex::new(0.0, 0.0); ip];
+    let mut wal = alloc::vec![Complex::new(0.0, 0.0); ip];
     wal[0] = Complex::new(1.0, 0.0);
     for i in 1..ip { wal[i] = Complex::new(csarr[i].re, sign as f64 * csarr[i].im); }
 
@@ -692,12 +694,12 @@ fn passg(ido: usize, ip: usize, l1: usize, cc: &mut [Complex], ch: &mut [Complex
 pub struct FactorData {
     pub fct: usize,
     pub tw: Vec<Complex>,
-    pub tws: Vec<Complex>,
+    pub tws: Vec<Complex>
 }
 
 pub struct CooleyTukey {
     len: usize,
-    fct: Vec<FactorData>,
+    fct: Vec<FactorData>
 }
 
 impl CooleyTukey {
@@ -724,7 +726,7 @@ impl CooleyTukey {
             let fctlen = self.fct.len(); self.fct.swap(0, fctlen - 1);
         }
 
-        let mut maxl = (len as f64).sqrt() as usize + 1;
+        let mut maxl = libm::sqrt(len as f64) as usize + 1;
         let mut divisor = 3;
         while len > 1 && divisor < maxl {
             if len % divisor == 0 {
@@ -732,7 +734,7 @@ impl CooleyTukey {
                     self.fct.push(FactorData { fct: divisor, tw: Vec::new(), tws: Vec::new() });
                     len /= divisor;
                 }
-                maxl = (len as f64).sqrt() as usize + 1;
+                maxl = libm::sqrt(len as f64) as usize + 1;
             }
             divisor += 2;
         }
@@ -742,7 +744,7 @@ impl CooleyTukey {
 
     fn compute_twiddle(&mut self) {
         let len = self.len;
-        let mut twid = vec![Complex::new(0.0, 0.0); len];
+        let mut twid = alloc::vec![Complex::new(0.0, 0.0); len];
         sincos_2pibyn(len, &mut twid);
 
         let mut l1 = 1;
@@ -752,7 +754,7 @@ impl CooleyTukey {
             let ido = len / (l1 * ip);
 
             let tw_size = (ip - 1) * (ido - 1);
-            self.fct[k].tw = vec![Complex::new(0.0, 0.0); tw_size];
+            self.fct[k].tw = alloc::vec![Complex::new(0.0, 0.0); tw_size];
 
             for j in 1..ip {
                 for i in 1..ido {
@@ -762,7 +764,7 @@ impl CooleyTukey {
             }
 
             if ip > 11 {
-                self.fct[k].tws = vec![Complex::new(0.0, 0.0); ip];
+                self.fct[k].tws = alloc::vec![Complex::new(0.0, 0.0); ip];
                 for j in 0..ip { self.fct[k].tws[j] = twid[j * l1 * ido]; }
             }
 
@@ -770,15 +772,15 @@ impl CooleyTukey {
         }
     }
 
-    pub fn forward(&self, data: &mut [Complex], fct: f64) { self.fft(data, fct, -1); }
-    pub fn backward(&self, data: &mut [Complex], fct: f64) { self.fft(data, fct, 1); }
+    pub fn forward(&self, data: &mut [Complex], fct: f64) -> Result { return self.fft(data, fct, -1); }
+    pub fn backward(&self, data: &mut [Complex], fct: f64) -> Result { return self.fft(data, fct, 1); }
 
-    fn fft(&self, data: &mut [Complex], fct: f64, sign: i32) {
-        if self.len != data.len() { panic!("Provided buffer({}) not compatible with CooleyTukey({}).", data.len(), self.len); }
-        if self.len < 2 { return; }
+    fn fft(&self, data: &mut [Complex], fct: f64, sign: i8) -> Result {
+        if self.len != data.len() { return Err(()); }
+        if self.len < 2 { return Ok(()); }
 
         let mut l1 = 1;
-        let mut ch = vec![Complex::new(0.0, 0.0); data.len()];
+        let mut ch = alloc::vec![Complex::new(0.0, 0.0); data.len()];
         let (mut p1, mut p2) = (&mut data[..], &mut ch[..]);
 
         for k1 in 0..self.fct.len() {
@@ -801,6 +803,7 @@ impl CooleyTukey {
 
         if fct != 1.0 { p1.iter_mut().for_each(|d| *d *= fct); }
         if p1.as_ptr() != data.as_ptr() { data.copy_from_slice(&ch); }
+        return Ok(());
     }
 
     pub fn len(&self) -> usize { self.len }

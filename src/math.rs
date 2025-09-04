@@ -1,22 +1,23 @@
 use crate::{Complex, ComplexExt};
+use core::f64::consts::PI;
 
 pub fn my_sincosm1pi(a: f64) -> Complex {
     let mut s = a * a;
     let mut r = -1.0369917389758117e-4;
-    r = s.mul_add(r, 1.9294935641298806e-3);
-    r = s.mul_add(r, -2.5806887942825395e-2);
-    r = s.mul_add(r, 2.3533063028328211e-1);
-    r = s.mul_add(r, -1.3352627688538006e+0);
-    r = s.mul_add(r, 4.0587121264167623e+0);
-    r = s.mul_add(r, -4.9348022005446790e+0);
+    r *= s; r += 1.9294935641298806e-3;
+    r *= s; r += -2.5806887942825395e-2;
+    r *= s; r += 2.3533063028328211e-1;
+    r *= s; r += -1.3352627688538006e+0;
+    r *= s; r += 4.0587121264167623e+0;
+    r *= s; r += -4.9348022005446790e+0;
     let c = r * s;
     let mut r2 = 4.6151442520157035e-4;
-    r2 = s.mul_add(r2, -7.3700183130883555e-3);
-    r2 = s.mul_add(r2, 8.2145868949323936e-2);
-    r2 = s.mul_add(r2, -5.9926452893214921e-1);
-    r2 = s.mul_add(r2, 2.5501640398732688e+0);
-    r2 = s.mul_add(r2, -5.1677127800499516e+0);
-    s = a.mul_add(core::f64::consts::PI, r2 * s * a);
+    r2 *= s; r2 += -7.3700183130883555e-3;
+    r2 *= s; r2 += 8.2145868949323936e-2;
+    r2 *= s; r2 += -5.9926452893214921e-1;
+    r2 *= s; r2 += 2.5501640398732688e+0;
+    r2 *= s; r2 += -5.1677127800499516e+0;
+    s = a * PI + (r2 * s * a);
     return Complex::new(c, s);
 }
 
@@ -26,7 +27,7 @@ fn calc_first_octant(den: usize, res: &mut [Complex]) {
     res[0] = Complex::new(1.0, 0.0);
     if n == 1 { return; }
 
-    let l1 = (n as f64).sqrt() as usize;
+    let l1 = libm::sqrt(n as f64) as usize;
     for i in 1..l1 {
         res[i] = my_sincosm1pi((2.0 * (i as f64)) / (den as f64));
     }
@@ -182,11 +183,11 @@ pub fn cost_guess(mut n: usize) -> f64 {
         result += 2.0;
         n >>= 1;
     }
-    let mut limit = (n as f64 + 0.01).sqrt() as usize;
+    let mut limit = libm::sqrt(n as f64 + 0.01) as usize;
     let mut x = 3; while x <= limit {
         while n % x == 0 {
             result += if x <= 5 { x as f64 } else { LFP * x as f64 };
-            n /= x; limit = (n as f64 + 0.01).sqrt() as usize;
+            n /= x; limit = libm::sqrt(n as f64 + 0.01) as usize;
         }
     x += 2; }
     if n > 1 { result += if n <= 5 { n as f64 } else { LFP * n as f64 }; }
