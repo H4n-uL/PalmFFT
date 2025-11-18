@@ -1,5 +1,5 @@
 Copyright (C) 2010-2019 Max-Planck-Society
-Copyright 2025 HaמuL
+Copyright 2025 HaƞuL
 All rights reserved.
 
 Redistribution and use in source and binary forms, with or without modification,

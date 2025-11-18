@@ -1,6 +1,6 @@
 [package]
 name = "palmfft"
-version = "1.3.0"
+version = "1.3.1"
 edition = "2024"
 description = "Palm-sized Faster Fourier Transform"
 repository = "https://github.com/H4n-uL/PalmFFT"
