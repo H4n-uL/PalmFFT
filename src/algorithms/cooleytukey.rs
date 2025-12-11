@@ -779,6 +779,7 @@ impl CooleyTukey {
         if self.len != data.len() { return Err(()); }
         if self.len < 2 { return Ok(()); }
 
+        if fct != 1.0 { data.iter_mut().for_each(|d| *d *= fct); }
         let mut l1 = 1;
         let mut ch = alloc::vec![Complex::new(0.0, 0.0); data.len()];
         let (mut p1, mut p2) = (&mut data[..], &mut ch[..]);
@@ -800,8 +801,6 @@ impl CooleyTukey {
 
             (p1, p2, l1) = (p2, p1, l2);
         }
-
-        if fct != 1.0 { p1.iter_mut().for_each(|d| *d *= fct); }
         if p1.as_ptr() != data.as_ptr() { data.copy_from_slice(&ch); }
         return Ok(());
     }
